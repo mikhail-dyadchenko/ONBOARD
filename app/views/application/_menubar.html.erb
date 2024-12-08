@@ -1,8 +1,20 @@
 <nav class="menuBar">
   <%# <div> %>
     <%= link_to "Главная", root_url %>
-    <%# <%= link_to "Сообщества", communities_url %> %>
-    <%# <%= link_to "Профиль", profile_url %> %>
+    
+    <% if user_signed_in? && current_user.admin? %>
+        <%= link_to "Сообщества", admin_communities_url %>
+    <% else %>
+        <%= link_to "Сообщества", communities_url %>
+    <% end %>
+
+    <% if user_signed_in? && current_user.admin? %>
+        <%= link_to "Профиль", admin_profile_url %>
+    <% else %>
+        <%= link_to "Профиль", profile_url %>
+    <% end %>
+    
+
   </div>
 
   <div>

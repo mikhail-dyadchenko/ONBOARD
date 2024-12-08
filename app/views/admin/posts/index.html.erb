@@ -8,9 +8,12 @@
   <% @posts.each do |post| %>
     <%= render post %>
     <p>
-      <%= link_to "Show this post", post %>
+      <%= link_to "Show this post", [:admin, post] %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New post", new_post_path %>
+
+<% if current_user && current_user.admin? %>
+<%= link_to "New post", new_admin_post_path %>
+<% end %>

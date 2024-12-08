@@ -1,4 +1,4 @@
-<%= form_with(model: post) do |form| %>
+<%= form_with(model: [:admin, post]) do |form| %>
   <% if post.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -10,10 +10,6 @@
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.collection_select :project_id, current_user.projects.order(:name), :id, :name, include_blank: true %>
-  </div>
 
   <div>
     <%= form.label :title, style: "display: block" %>

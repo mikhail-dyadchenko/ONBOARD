@@ -4,28 +4,29 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user
 
-    admins    = [ "superadmin", "admin" ]
-    redactors = [ "superadmin", "admin", "redactor" ]
-    authors   = [ "superadmin", "admin", "redactor", "author" ]
-    civils    = [                                   "author", "user" ]
-    roles     = [ "superadmin", "admin", "redactor", "author", "user" ]
+    # can :read, Post, public: true
+    # can :read, Community, public: true
 
-    user.role == "superadmin" ? (can [ :read, :manage ], :all) : (cannot [ :read, :manage ], :all)
+    admins    = [ "admin" ]
+    redactors = [ "admin", "redactor" ]
+    authors   = [ "admin", "redactor", "author" ]
+    civils    = [                      "author", "user" ]
+    roles     = [ "admin", "redactor", "author", "user" ]
+
+    user.role == "admin" ? (can [ :read, :manage ], :all) : (cannot [ :read, :manage ], :all)
 
 
     # Basic rules for admins
 
     if admins.include?(user.role)
-      cannot :edit, User, role: "superadmin"
-      can    :edit, User, { id: user.id, role: "superadmin" }
+      cannot :edit, User, role: "admin"
       can    :edit, User, { id: user.id, role: "admin" }
       can    :edit, User, role: "redactor"
       can    :edit, User, role: "author"
       can    :edit, User, role: "user"
       can    :index, User
 
-      cannot :change_contributor_status, User, role: "superadmin"
-      can    :change_contributor_status, User, { id: user.id, role: "superadmin" }
+      cannot :change_contributor_status, User, role: "admin"
       can    :change_contributor_status, User, { id: user.id, role: "admin" }
       can    :change_contributor_status, User, role: "redactor"
       can    :change_contributor_status, User, role: "author"
