@@ -33,6 +33,12 @@ def create_sentence
   sentence = sentence_words.join(' ').capitalize + '.'
 end
 
+def upload_random_image
+  uploader = ImgUploader.new(Post.new, :post_image)
+  uploader.cache!(File.open(Dir.glob(File.join(Rails.root, 'public/autoupload/posts', '*')).sample))
+  uploader
+end
+
 def create_posts(quantity)
   quantity.times do
     post = Post.create(title: create_sentence, body: create_sentence)
