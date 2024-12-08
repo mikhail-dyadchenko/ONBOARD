@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+
 def create_users
   i = 0
 
@@ -23,3 +24,5 @@ def create_users
     i += 1
   end
 end
+
+create_users
